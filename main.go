@@ -3,7 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"os"
+)
+
+var (
+	ApiRoot = "http://developer.echonest.com/api/v4/artist"
 )
 
 var Usage = func() {
@@ -30,8 +35,15 @@ OPTIONS:
 
 var Version = "0.0.1"
 
-func Run() {
-	fmt.Println("Runnig...")
+func Run(artist string) {
+
+	urls, err := FetchUrls(artist)
+	if err != nil {
+		log.Println("Ops. No urls")
+	}
+
+	fmt.Printf("%v\n", urls)
+
 }
 
 func main() {
@@ -49,7 +61,7 @@ func main() {
 
 	if *artist != "" {
 		fmt.Fprintf(os.Stdout, "You have selected the artist: %s\n", *artist)
-		Run()
+		Run(*artist)
 	} else {
 		fmt.Println("You should enter an artist name in order to proceed.")
 	}
