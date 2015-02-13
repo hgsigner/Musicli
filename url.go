@@ -86,3 +86,11 @@ func FetchUrls(artist string) (Urls, error) {
 	return results.Response.Urls, nil
 
 }
+
+func RunUrls(artist string) {
+	urls, err := FetchUrls(artist)
+	if err != nil {
+		fmt.Fprintln(os.Stdout, err)
+	}
+	fmt.Fprintf(os.Stdout, urls.FormatUrls())
+}

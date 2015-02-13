@@ -44,11 +44,7 @@ func Run(artist, category string) {
 
 	switch category {
 	case "urls":
-		urls, err := FetchUrls(artist)
-		if err != nil {
-			fmt.Println(err)
-		}
-		fmt.Println(urls.FormatUrls())
+		RunUrls(artist)
 	}
 
 }
@@ -71,7 +67,7 @@ func main() {
 		fmt.Fprintf(os.Stdout, "You have selected the artist %s and the category %s.\n", *artist, *category)
 		Run(*artist, *category)
 	} else {
-		fmt.Println("WARNING: You should enter an artist name and a category in order to proceed.\nType musicli --help in order to get the availables categories.")
+		fmt.Fprintln(os.Stdout, "WARNING: You should enter an artist name and a category in order to proceed.\nType musicli --help in order to get the availables categories.")
 	}
 
 }
