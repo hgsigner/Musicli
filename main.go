@@ -8,7 +8,12 @@ import (
 
 var (
 	ApiRoot = "http://developer.echonest.com/api/v4/artist"
+	ApiKey  = ""
 )
+
+func init() {
+	ApiKey = os.Getenv("ECHONEST_KEY")
+}
 
 var Usage = func() {
 	fmt.Fprintf(os.Stderr, `

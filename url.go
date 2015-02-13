@@ -9,12 +9,6 @@ import (
 	"reflect"
 )
 
-var ApiKey = ""
-
-func init() {
-	ApiKey = os.Getenv("ECHONEST_KEY")
-}
-
 type Urls struct {
 	MyspaceUrl   string `json:"myspace_url,omitempty"`
 	LastfmUrl    string `json:"lastfm_url,omitempty"`
