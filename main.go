@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -22,11 +21,14 @@ USAGE:
 VERSION:
   %s
 
+CATEGORIES:
+  urls
+
 COMMANDS:
   help, h Shows a list of commands or help
 
 EXAMPLES:
-  musicli -artist="Paul Mccartney"
+  musicli -artist="Paul Mccartney" -category="urls"
 
 OPTIONS:
 `, Version)
@@ -34,15 +36,20 @@ OPTIONS:
 }
 
 var Version = "0.0.1"
+var Categories = []string{
+	"urls",
+}
 
-func Run(artist string) {
+func Run(artist, category string) {
 
-	urls, err := FetchUrls(artist)
-	if err != nil {
-		log.Println("Ops. No urls")
+	switch category {
+	case "urls":
+		urls, err := FetchUrls(artist)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(urls.FormatUrls())
 	}
-
-	fmt.Printf("%v\n", urls)
 
 }
 
@@ -50,6 +57,7 @@ func main() {
 
 	version := flag.Bool("version", false, "display the version number")
 	artist := flag.String("artist", "", "artist's name for searching")
+	category := flag.String("category", "", "categories to search for")
 
 	flag.Usage = Usage
 	flag.Parse()
@@ -59,11 +67,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	if *artist != "" {
-		fmt.Fprintf(os.Stdout, "You have selected the artist: %s\n", *artist)
-		Run(*artist)
+	if ok := SliceContains(Categories, *category); *artist != "" && ok {
+		fmt.Fprintf(os.Stdout, "You have selected the artist %s and the category %s.\n", *artist, *category)
+		Run(*artist, *category)
 	} else {
-		fmt.Println("You should enter an artist name in order to proceed.")
+		fmt.Println("WARNING: You should enter an artist name and a category in order to proceed.\nType musicli --help in order to get the availables categories.")
 	}
 
 }

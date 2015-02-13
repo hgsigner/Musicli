@@ -37,6 +37,27 @@ func Test_Artist_With__All_Urls(t *testing.T) {
 
 }
 
+func Test_Artist_Not_Found(t *testing.T) {
+	assert := assert.New(t)
+
+	body := `{
+	  "response": {
+	    "status": {
+	      "code": 5,
+	      "message": "Success",
+	      "version": "4.2"
+	    }
+	  }
+	}`
+
+	FakeServer(body, func() {
+		_, err := FetchUrls("jahsfks")
+		assert.Error(err)
+		assert.Equal("Theres no band with this name: jahsfks. Please try again", err.Error())
+	})
+
+}
+
 func Test_Artist_Partial_Urls(t *testing.T) {
 	assert := assert.New(t)
 
@@ -61,6 +82,26 @@ func Test_Artist_Partial_Urls(t *testing.T) {
 		assert.Empty(urls.MbUrl)
 		assert.Empty(urls.LastfmUrl)
 	})
+
+}
+
+func Test_Formated_Struct_Result(t *testing.T) {
+
+	assert := assert.New(t)
+
+	urls := Urls{
+		"http://www.myspace.com/radiohead",
+		"",
+		"",
+		"http://en.wikipedia.org/wiki/Radiohead",
+		"http://radiohead.com",
+	}
+
+	formated := urls.FormatUrls()
+
+	assert.Contains(formated, "http://www.myspace.com/radiohead")
+	assert.Contains(formated, "http://en.wikipedia.org/wiki/Radiohead")
+	assert.Contains(formated, "http://radiohead.com")
 
 }
 

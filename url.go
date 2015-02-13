@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"reflect"
 )
 
 var ApiKey = ""
@@ -37,6 +38,31 @@ type UrlsSearchResults struct {
 	Response UrlResponse `json:"response"`
 }
 
+func (u Urls) FormatUrls() string {
+
+	st := reflect.ValueOf(u)
+	fields_count := st.NumField()
+	retrieved_urls := []string{}
+
+	for i := 0; i < fields_count; i++ {
+		if field_value := st.Field(i).String(); field_value != "" {
+			retrieved_urls = append(retrieved_urls, field_value)
+		}
+	}
+
+	if len(retrieved_urls) == 0 {
+		return ""
+	}
+
+	formated_urls := ""
+	for _, url := range retrieved_urls {
+		formated_urls = fmt.Sprintf("%s%s\n", formated_urls, url)
+	}
+
+	return formated_urls
+
+}
+
 func FetchUrls(artist string) (Urls, error) {
 
 	url := fmt.Sprintf("%s/urls?api_key=%s&name=%s&format=json", ApiRoot, ApiKey, url.QueryEscape(artist))
@@ -51,6 +77,10 @@ func FetchUrls(artist string) (Urls, error) {
 	err = json.NewDecoder(res.Body).Decode(&results)
 	if err != nil {
 		return eUrls, err
+	}
+
+	if results.Response.Status.Code == 5 {
+		return eUrls, fmt.Errorf("Theres no band with this name: %s. Please try again", artist)
 	}
 
 	return results.Response.Urls, nil
