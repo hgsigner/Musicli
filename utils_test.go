@@ -7,6 +7,17 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test_Arg_Not_A_Slice(t *testing.T) {
+	assert := assert.New(t)
+
+	slice := 1
+
+	contains := SliceContains(slice, "songs")
+
+	assert.False(contains)
+
+}
+
 func Test_Slice_Contains_String(t *testing.T) {
 	assert := assert.New(t)
 
