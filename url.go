@@ -17,15 +17,15 @@ type Urls struct {
 	OfficialUrl  string `json:"official_url,omitempty"`
 }
 
-type Status struct {
+type UrlsStatus struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Version string `json:"version"`
 }
 
 type UrlResponse struct {
-	Status Status `json:"status"`
-	Urls   Urls   `json:"urls"`
+	Status UrlsStatus `json:"status"`
+	Urls   Urls       `json:"urls"`
 }
 
 type UrlsSearchResults struct {
