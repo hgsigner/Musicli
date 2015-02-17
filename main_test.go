@@ -19,7 +19,7 @@ func Test_E2E_Urls(t *testing.T) {
 
 	res := w.String()
 
-	assert.Contains(res, "You have selected the artist radiohead and the category urls.")
+	assert.Contains(res, "You have selected the artist RADIOHEAD with category URLS")
 
 }
 
@@ -35,6 +35,6 @@ func Test_E2E_Location(t *testing.T) {
 
 	res := w.String()
 
-	assert.Contains(res, "You have selected the artist radiohead and the category location.")
+	assert.Contains(res, "You have selected the artist RADIOHEAD with category LOCATION")
 
 }

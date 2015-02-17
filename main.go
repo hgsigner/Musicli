@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 )
 
 var (
@@ -50,7 +51,7 @@ var Categories = []string{
 
 func Run(artist, category string, out io.Writer) {
 
-	fmt.Fprintf(out, "You have selected the artist %s and the category %s.\n", artist, category)
+	fmt.Fprintf(out, "You have selected the artist %s with category %s\n", strings.ToUpper(artist), strings.ToUpper(category))
 
 	switch category {
 	case "urls":
