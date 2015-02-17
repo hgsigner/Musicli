@@ -3,9 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
-	"os"
 )
 
 type ArtistLocation struct {
@@ -60,10 +60,10 @@ func RetrieveLocation(artist string) (ArtistLocation, error) {
 
 }
 
-func RunLocation(art string) {
+func RunLocation(art string, out io.Writer) {
 	location, err := RetrieveLocation(art)
 	if err != nil {
-		fmt.Fprintln(os.Stdout, err)
+		fmt.Fprintln(out, err)
 	}
-	fmt.Fprintf(os.Stdout, FormatStructToText(location))
+	fmt.Fprintf(out, FormatStructToText(location))
 }

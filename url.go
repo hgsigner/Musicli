@@ -3,9 +3,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
-	"os"
 )
 
 type Urls struct {
@@ -55,10 +55,10 @@ func FetchUrls(artist string) (Urls, error) {
 
 }
 
-func RunUrls(artist string) {
+func RunUrls(artist string, out io.Writer) {
 	urls, err := FetchUrls(artist)
 	if err != nil {
-		fmt.Fprintln(os.Stdout, err)
+		fmt.Fprintln(out, err)
 	}
-	fmt.Fprintf(os.Stdout, FormatStructToText(urls))
+	fmt.Fprintf(out, FormatStructToText(urls))
 }
