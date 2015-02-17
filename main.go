@@ -28,6 +28,7 @@ VERSION:
 
 CATEGORIES:
   urls
+  location
 
 COMMANDS:
   help, h Shows a list of commands or help
