@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"os"
 )
 
 type ArtistLocation struct {
@@ -57,4 +58,12 @@ func RetrieveLocation(artist string) (ArtistLocation, error) {
 
 	return results.Response.Artist.ArtistLocation, nil
 
+}
+
+func RunLocation(art string) {
+	location, err := RetrieveLocation(art)
+	if err != nil {
+		fmt.Fprintln(os.Stdout, err)
+	}
+	fmt.Fprintf(os.Stdout, FormatStructToText(location))
 }

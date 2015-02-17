@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"reflect"
 )
 
 type Urls struct {
@@ -30,31 +29,6 @@ type UrlResponse struct {
 
 type UrlsSearchResults struct {
 	Response UrlResponse `json:"response"`
-}
-
-func (u Urls) FormatUrls() string {
-
-	st := reflect.ValueOf(u)
-	fields_count := st.NumField()
-	retrieved_urls := []string{}
-
-	for i := 0; i < fields_count; i++ {
-		if field_value := st.Field(i).String(); field_value != "" {
-			retrieved_urls = append(retrieved_urls, field_value)
-		}
-	}
-
-	if len(retrieved_urls) == 0 {
-		return ""
-	}
-
-	formated_urls := ""
-	for _, url := range retrieved_urls {
-		formated_urls = fmt.Sprintf("%s%s\n", formated_urls, url)
-	}
-
-	return formated_urls
-
 }
 
 func FetchUrls(artist string) (Urls, error) {
@@ -86,5 +60,5 @@ func RunUrls(artist string) {
 	if err != nil {
 		fmt.Fprintln(os.Stdout, err)
 	}
-	fmt.Fprintf(os.Stdout, urls.FormatUrls())
+	fmt.Fprintf(os.Stdout, FormatStructToText(urls))
 }

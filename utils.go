@@ -1,6 +1,9 @@
 package main
 
-import "reflect"
+import (
+	"fmt"
+	"reflect"
+)
 
 func SliceContains(arg interface{}, match interface{}) bool {
 
@@ -26,4 +29,29 @@ func CheckInterfaceType(arg interface{}, kind reflect.Kind) (reflect.Value, bool
 	}
 
 	return val, false
+}
+
+func FormatStructToText(str interface{}) string {
+
+	st := reflect.ValueOf(str)
+	fields_count := st.NumField()
+	retrieved_urls := []string{}
+
+	for i := 0; i < fields_count; i++ {
+		if field_value := st.Field(i).String(); field_value != "" {
+			retrieved_urls = append(retrieved_urls, field_value)
+		}
+	}
+
+	if len(retrieved_urls) == 0 {
+		return ""
+	}
+
+	formated_urls := ""
+	for _, url := range retrieved_urls {
+		formated_urls = fmt.Sprintf("%s%s\n", formated_urls, url)
+	}
+
+	return formated_urls
+
 }

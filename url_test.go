@@ -85,26 +85,6 @@ func Test_Artist_Partial_Urls(t *testing.T) {
 
 }
 
-func Test_Formated_Struct_Result(t *testing.T) {
-
-	assert := assert.New(t)
-
-	urls := Urls{
-		"http://www.myspace.com/radiohead",
-		"",
-		"",
-		"http://en.wikipedia.org/wiki/Radiohead",
-		"http://radiohead.com",
-	}
-
-	formated := urls.FormatUrls()
-
-	assert.Contains(formated, "http://www.myspace.com/radiohead")
-	assert.Contains(formated, "http://en.wikipedia.org/wiki/Radiohead")
-	assert.Contains(formated, "http://radiohead.com")
-
-}
-
 func FakeServer(body string, f func()) {
 	root := ApiRoot
 

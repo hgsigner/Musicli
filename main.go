@@ -43,6 +43,7 @@ OPTIONS:
 var Version = "0.0.1"
 var Categories = []string{
 	"urls",
+	"location",
 }
 
 func Run(artist, category string) {
@@ -50,6 +51,8 @@ func Run(artist, category string) {
 	switch category {
 	case "urls":
 		RunUrls(artist)
+	case "location":
+		RunLocation(artist)
 	}
 
 }
